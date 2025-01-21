@@ -31,7 +31,7 @@ function loadNewImage() {
   actualLon = imageData.longitude;
 
   document.getElementById('image-container').innerHTML = `
-    <img src="images/${imageData.image}" alt="Lunar Image">
+    <img src="${imageData.image}" alt="Lunar Image">
     <p>Where do you think this image was taken?</p>
   `;
 
