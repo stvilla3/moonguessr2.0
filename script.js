@@ -1,5 +1,5 @@
 let data = []; // Stores the JSON data
-let currentIndex = 0; // Tracks the current image
+let usedIndices = []; // Tracks used images
 let userLat, userLon; // User's clicked coordinates
 let actualLat, actualLon; // Correct answer
 let score = 0; // Total score
@@ -21,13 +21,17 @@ document.getElementById('start-game').addEventListener('click', () => {
 
 // Display a random lunar image
 function loadNewImage() {
-  if (data.length === 0) {
-    document.getElementById('image-container').innerHTML = `<p>No images available!</p>`;
+  if (usedIndices.length === data.length) {
+    document.getElementById('image-container').innerHTML = `<p>Game Over! Your final score: ${score}</p>`;
     return;
   }
 
-  // Select a random index
-  const randomIndex = Math.floor(Math.random() * data.length);
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * data.length);
+  } while (usedIndices.includes(randomIndex)); // Ensure no duplicate images
+
+  usedIndices.push(randomIndex); // Mark this index as used
   const imageData = data[randomIndex];
 
   actualLat = imageData.latitude;
@@ -50,11 +54,39 @@ function loadNewImage() {
     actualMarker = null;
   }
 
-  // Disable the same image from appearing twice
-  data.splice(randomIndex, 1); // Remove the selected image from the pool
-
   document.getElementById('lunar-map').addEventListener('click', handleMapClick);
   document.getElementById('guess').disabled = false;
+}
+
+// Handle map click
+function handleMapClick(event) {
+  const map = document.getElementById('lunar-map');
+  const rect = map.getBoundingClientRect();
+
+  // Get click position relative to the image
+  const clickX = event.clientX - rect.left;
+  const clickY = event.clientY - rect.top;
+
+  // Map the click to latitude and longitude
+  const mapWidth = map.offsetWidth;
+  const mapHeight = map.offsetHeight;
+
+  userLon = (clickX / mapWidth) * 360 - 180; // Longitude: -180 to 180
+  userLat = 90 - (clickY / mapHeight) * 180; // Latitude: 90 to -90
+
+  console.log(`User guessed: Latitude ${userLat.toFixed(2)}, Longitude ${userLon.toFixed(2)}`);
+
+  // Add or update the user marker
+  if (userMarker) {
+    userMarker.style.left = `${clickX}px`;
+    userMarker.style.top = `${clickY}px`;
+  } else {
+    userMarker = document.createElement('div');
+    userMarker.className = 'marker user';
+    userMarker.style.left = `${clickX}px`;
+    userMarker.style.top = `${clickY}px`;
+    map.parentElement.appendChild(userMarker);
+  }
 }
 
 // Submit guess
@@ -98,7 +130,6 @@ document.getElementById('guess').addEventListener('click', () => {
   }
 
   // Move to the next image
-  currentIndex++;
   document.getElementById('guess').disabled = true;
   document.getElementById('lunar-map').removeEventListener('click', handleMapClick);
 });
@@ -116,5 +147,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
 
 
