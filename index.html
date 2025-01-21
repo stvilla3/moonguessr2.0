@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonguessr</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Moonguessr</h1>    
+        <p><p>
+    </header>
+
+    <!-- Main Game Container -->
+    <main>
+        <!-- Game Section -->
+        <section id="game">
+            <div id="image-container">
+                <!-- Random lunar image will be displayed here -->
+                <p>Click "Start" to begin your journey!</p>
+            </div>
+            <button id="start-game">Start Game</button>
+        </section>
+
+        <!-- Map Section -->
+        <section id="map">
+            <h2>Make Your Guess</h2>
+            <div id="map-container">
+                <!-- Lunar Map Image -->
+                <img 
+                    src="https://astrogeology.usgs.gov/ckan/dataset/db948a2d-4d6a-4775-a0d3-12613d36f9e7/resource/d24d5ef3-abc5-42ee-ac7c-4c3261106327/download/moon_lro_lroc-wac_mosaic_global_1024.jpg" 
+                    alt="Lunar Map" 
+                    id="lunar-map"
+                >
+            </div>
+            <button id="guess">Submit Guess</button>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results">
+            <h2>Your Results</h2>
+            <div id="score-container">
+                <p>Your score will appear here after submitting a guess.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Built for fun &copy; 2024</p>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
+
