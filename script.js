@@ -54,7 +54,13 @@ function loadNewImage() {
     actualMarker = null;
   }
 
-  document.getElementById('lunar-map').addEventListener('click', handleMapClick);
+  // Add map click event listener (ensure it's only added once)
+  const map = document.getElementById('lunar-map');
+  if (!map.dataset.clickListener) {
+    map.addEventListener('click', handleMapClick);
+    map.dataset.clickListener = 'true'; // Track that the listener is added
+  }
+
   document.getElementById('guess').disabled = false;
 }
 
@@ -131,7 +137,6 @@ document.getElementById('guess').addEventListener('click', () => {
 
   // Move to the next image
   document.getElementById('guess').disabled = true;
-  document.getElementById('lunar-map').removeEventListener('click', handleMapClick);
 });
 
 // Calculate distance using the Haversine formula
@@ -147,6 +152,3 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
-
-
-
