@@ -21,12 +21,15 @@ document.getElementById('start-game').addEventListener('click', () => {
 
 // Display a random lunar image
 function loadNewImage() {
-  if (currentIndex >= data.length) {
-    document.getElementById('image-container').innerHTML = `<p>Game Over! Your final score: ${score}</p>`;
+  if (data.length === 0) {
+    document.getElementById('image-container').innerHTML = `<p>No images available!</p>`;
     return;
   }
 
-  const imageData = data[currentIndex];
+  // Select a random index
+  const randomIndex = Math.floor(Math.random() * data.length);
+  const imageData = data[randomIndex];
+
   actualLat = imageData.latitude;
   actualLon = imageData.longitude;
 
@@ -47,39 +50,11 @@ function loadNewImage() {
     actualMarker = null;
   }
 
+  // Disable the same image from appearing twice
+  data.splice(randomIndex, 1); // Remove the selected image from the pool
+
   document.getElementById('lunar-map').addEventListener('click', handleMapClick);
   document.getElementById('guess').disabled = false;
-}
-
-// Handle map click
-function handleMapClick(event) {
-  const map = document.getElementById('lunar-map');
-  const rect = map.getBoundingClientRect();
-
-  // Get click position relative to the image
-  const clickX = event.clientX - rect.left;
-  const clickY = event.clientY - rect.top;
-
-  // Map the click to latitude and longitude
-  const mapWidth = map.offsetWidth;
-  const mapHeight = map.offsetHeight;
-
-  userLon = (clickX / mapWidth) * 360 - 180; // Longitude: -180 to 180
-  userLat = 90 - (clickY / mapHeight) * 180; // Latitude: 90 to -90
-
-  console.log(`User guessed: Latitude ${userLat.toFixed(2)}, Longitude ${userLon.toFixed(2)}`);
-
-  // Add or update the user marker
-  if (userMarker) {
-    userMarker.style.left = `${clickX}px`;
-    userMarker.style.top = `${clickY}px`;
-  } else {
-    userMarker = document.createElement('div');
-    userMarker.className = 'marker user';
-    userMarker.style.left = `${clickX}px`;
-    userMarker.style.top = `${clickY}px`;
-    map.parentElement.appendChild(userMarker);
-  }
 }
 
 // Submit guess
