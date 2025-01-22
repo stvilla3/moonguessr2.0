@@ -1,5 +1,5 @@
 body {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Quantico';
     background-color: #121212;
     color: #ffffff;
     text-align: center;
@@ -72,19 +72,60 @@ body {
 
   
   button {
-    background-color: #0077ff;
+    font-family: 'Quantico';
+    background-color: #4d4c4c;
     color: #ffffff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 10px 90px;
+    border-radius: 2px;
     font-size: 1em;
     cursor: pointer;
     margin: 10px;
   }
   
   button:hover {
-    background-color: #005bb5;
+    background-color: #8f69e8;
   }
+
+  #credits {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #939292; /* Light gray background for contrast */
+    text-align: center;
+    border-radius: 8px; /* Rounded edges for a polished look */
+    font-family: Arial, sans-serif; /* Default font for simplicity */
+  }
+  
+  #credits h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333; /* Dark text for readability */
+  }
+  
+  #credits p {
+    margin-bottom: 15px;
+    color: #555; /* Slightly lighter text for secondary content */
+  }
+  
+  #credits ul {
+    list-style: none; /* Removes bullet points */
+    padding: 0;
+  }
+  
+  #credits li {
+    margin: 5px 0;
+  }
+  
+  #credits a {
+    color: #0066cc; /* Blue links */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  #credits a:hover {
+    text-decoration: underline;
+  }
+  
   
   footer {
     background-color: #1a1a1a;
