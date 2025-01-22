@@ -1,11 +1,11 @@
-let data = []; // Stores the JSON data
-let usedIndices = []; // Tracks used images
-let userLat, userLon; // User's clicked coordinates
-let actualLat, actualLon; // Correct answer
-let score = 0; // Total score
-let userMarker, actualMarker; // Markers for map
+let data = [];
+let usedIndices = []; 
+let userLat, userLon; 
+let actualLat, actualLon; 
+let score = 0; 
+let userMarker, actualMarker;
 
-// Load JSON data
+
 fetch('data.json')
   .then((response) => response.json())
   .then((json) => {
@@ -14,12 +14,12 @@ fetch('data.json')
   })
   .catch((error) => console.error('Error loading JSON:', error));
 
-// Start the game
+
 document.getElementById('start-game').addEventListener('click', () => {
   loadNewImage();
 });
 
-// Display a random lunar image
+
 function loadNewImage() {
   if (usedIndices.length === data.length) {
     document.getElementById('image-container').innerHTML = `<p>Game Over! Your final score: ${score}</p>`;
@@ -29,9 +29,9 @@ function loadNewImage() {
   let randomIndex;
   do {
     randomIndex = Math.floor(Math.random() * data.length);
-  } while (usedIndices.includes(randomIndex)); // Ensure no duplicate images
+  } while (usedIndices.includes(randomIndex)); 
 
-  usedIndices.push(randomIndex); // Mark this index as used
+  usedIndices.push(randomIndex); 
   const imageData = data[randomIndex];
 
   actualLat = imageData.latitude;
@@ -42,7 +42,7 @@ function loadNewImage() {
     <p>Where do you think this image was taken?</p>
   `;
 
-  // Reset variables and clear old markers
+
   userLat = undefined;
   userLon = undefined;
   if (userMarker) {
@@ -54,35 +54,34 @@ function loadNewImage() {
     actualMarker = null;
   }
 
-  // Add map click event listener (ensure it's only added once)
+
   const map = document.getElementById('lunar-map');
   if (!map.dataset.clickListener) {
     map.addEventListener('click', handleMapClick);
-    map.dataset.clickListener = 'true'; // Track that the listener is added
+    map.dataset.clickListener = 'true'; 
   }
 
   document.getElementById('guess').disabled = false;
 }
 
-// Handle map click
+
 function handleMapClick(event) {
   const map = document.getElementById('lunar-map');
   const rect = map.getBoundingClientRect();
 
-  // Get click position relative to the image
+
   const clickX = event.clientX - rect.left;
   const clickY = event.clientY - rect.top;
 
-  // Map the click to latitude and longitude
+
   const mapWidth = map.offsetWidth;
   const mapHeight = map.offsetHeight;
 
-  userLon = (clickX / mapWidth) * 360 - 180; // Longitude: -180 to 180
-  userLat = 90 - (clickY / mapHeight) * 180; // Latitude: 90 to -90
+  userLon = (clickX / mapWidth) * 360 - 180; 
+  userLat = 90 - (clickY / mapHeight) * 180;
 
   console.log(`User guessed: Latitude ${userLat.toFixed(2)}, Longitude ${userLon.toFixed(2)}`);
 
-  // Add or update the user marker
   if (userMarker) {
     userMarker.style.left = `${clickX}px`;
     userMarker.style.top = `${clickY}px`;
@@ -95,14 +94,13 @@ function handleMapClick(event) {
   }
 }
 
-// Submit guess
 document.getElementById('guess').addEventListener('click', () => {
   if (userLat === undefined || userLon === undefined) {
     alert('Please click on the map to make a guess!');
     return;
   }
 
-  // Calculate distance
+
   const distance = calculateDistance(userLat, userLon, actualLat, actualLon);
   let resultText = `You were ${distance.toFixed(2)} km away. `;
 
@@ -118,7 +116,7 @@ document.getElementById('guess').addEventListener('click', () => {
 
   document.getElementById('score-container').innerHTML = `<p>${resultText} Total Score: ${score}</p>`;
 
-  // Add marker for the actual location
+
   const map = document.getElementById('lunar-map');
   const rect = map.getBoundingClientRect();
   const actualX = ((actualLon + 180) / 360) * map.offsetWidth;
@@ -135,13 +133,13 @@ document.getElementById('guess').addEventListener('click', () => {
     map.parentElement.appendChild(actualMarker);
   }
 
-  // Move to the next image
+  
   document.getElementById('guess').disabled = true;
 });
 
-// Calculate distance using the Haversine formula
+
 function calculateDistance(lat1, lon1, lat2, lon2) {
-  const R = 1737.4; // Radius of the Moon in km
+  const R = 1737.4; 
   const toRad = Math.PI / 180;
   const dLat = (lat2 - lat1) * toRad;
   const dLon = (lon2 - lon1) * toRad;
