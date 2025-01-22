@@ -90,25 +90,25 @@ body {
   #credits {
     margin-top: 40px;
     padding: 20px;
-    background-color: #939292; /* Light gray background for contrast */
+    background-color: #939292; 
     text-align: center;
-    border-radius: 8px; /* Rounded edges for a polished look */
-    font-family: Arial, sans-serif; /* Default font for simplicity */
+    border-radius: 8px; 
+    font-family: 'Quantico'; 
   }
   
   #credits h2 {
     font-size: 24px;
     margin-bottom: 10px;
-    color: #333; /* Dark text for readability */
+    color: #333; 
   }
   
   #credits p {
     margin-bottom: 15px;
-    color: #555; /* Slightly lighter text for secondary content */
+    color: #555; 
   }
   
   #credits ul {
-    list-style: none; /* Removes bullet points */
+    list-style: none; 
     padding: 0;
   }
   
