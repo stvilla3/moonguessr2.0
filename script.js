@@ -106,7 +106,6 @@ document.getElementById('guess').addEventListener('click', () => {
 
   // changed scoring mechanics in the following two lines
   score = 5000*(2.71)^(-10 * distance / 5400)
-  resultText = score
 
   document.getElementById('score-container').innerHTML = `<p>${resultText} Total Score: ${score}</p>`;
 
