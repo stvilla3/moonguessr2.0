@@ -104,15 +104,9 @@ document.getElementById('guess').addEventListener('click', () => {
   const distance = calculateDistance(userLat, userLon, actualLat, actualLon);
   let resultText = `You were ${distance.toFixed(2)} km away. `;
 
-  if (distance < 50) {
-    score += 100;
-    resultText += '+100 points!';
-  } else if (distance < 200) {
-    score += 50;
-    resultText += '+50 points!';
-  } else {
-    resultText += 'No points.';
-  }
+  // changed scoring mechanics in the following two lines
+  score = 5000*5400/distance^2
+  resultText = score
 
   document.getElementById('score-container').innerHTML = `<p>${resultText} Total Score: ${score}</p>`;
 
