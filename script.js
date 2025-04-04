@@ -105,7 +105,7 @@ document.getElementById('guess').addEventListener('click', () => {
   let resultText = `You were ${distance.toFixed(2)} km away. `;
 
   // changed scoring mechanics in the following two lines
-  score = 5000*(2.71)^(-10 * distance / 5400)
+  score = 5000*2.71.pow(-10*distance^2/5400)
 
   document.getElementById('score-container').innerHTML = `<p>${resultText} Total Score: ${score}</p>`;
 
